@@ -1,9 +1,11 @@
-import src.mqtt.mqtt
+import src.mqtt.mqtt as mqtt
 from unittest import mock
+import os
 
 def test_connect_mqtt():
-    username = "user"
-    password = "password"
-    broker = '192.168.2.51'
+    username = os.environ['USERNAME']
+    password = os.environ['PASSWORD']
+    broker = os.environ['BROKER']
     port = 1883
-    client = src.mqtt.mqtt.connect_mqtt(broker, port, username, password)
+    client = mqtt.Mqtt(username,password,broker,port)
+    client.connect()

@@ -1,23 +1,37 @@
-import src.mqtt.mqtt
+import src.mqtt.mqtt as mqtt
+import os
+import unittest
+import pytest
+import json
 from unittest import mock
 from paho.mqtt import client as mqtt_client
 
+class Test_mqtt(unittest.TestCase):
+    
+    def setUp(self):
+        self.username = os.environ['USERNAME']
+        self.password = os.environ['PASSWORD']
+        self.broker = os.environ['BROKER']
+        self.port = 1883
+        self.client = mqtt.Mqtt(self.username, self.password, self.broker, self.port)
+        
+    def test_mqtt_constructor(self):
+        self.assertEqual(self.client.username, self.username)
+        self.assertEqual(self.client.password, self.password)
+        self.assertEqual(self.client.broker, self.broker)
+        self.assertEqual(self.client.port, self.port)
+        self.assertIsInstance(self.client.client, mqtt_client.Client)
 
-def test_connect_mqtt():
-    username = "user"
-    password = "password"
-    broker = '192.168.2.51'
-    port = 1883
-    mqtt_client.Client = mock.MagicMock()
+    def test_connect(self):
+        self.client.client.username_pw_set = mock.MagicMock()
+        self.client.client.connect = mock.MagicMock()
+        self.client.connect()
+        self.client.client.username_pw_set.assert_called_with(self.username, self.password)
+        self.client.client.connect.assert_called_with(self.broker, self.port)
 
-    client = src.mqtt.mqtt.connect_mqtt(broker, port, username, password)
-    assert mqtt_client.Client.called
-    client.username_pw_set.assert_called_with(username, password)
-    assert client.connect.called
-
-def test_publishes():
-    topic = 'python/test'
-    message = {'test': 'test'}
-    client = mock.MagicMock()
-    src.mqtt.mqtt.publish(client, topic, message)
-    assert client.publish.called
+    def test_publishes(self):
+        topic = 'python/mqtt'
+        message = {"test": "test"}
+        self.client.client.publish = mock.MagicMock()
+        self.client.publish(topic, message)
+        self.client.client.publish.assert_called_with(topic, message)
