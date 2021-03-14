@@ -1,15 +1,14 @@
-from sensor.capture import capture
-import unittest
 import time
-from unittest import mock
 import os
+from sensor.capture import capture
+from unittest import mock, TestCase
 if os.environ['env'] == 'development':
     import FakeRPi.GPIO as GPIO
 else:
     import RPi.GPIO as GPIO
 
 
-class Test_capture(unittest.TestCase):
+class Test_capture(TestCase):
 
     def setUp(self):
         self.device = capture.Capture(6,19)

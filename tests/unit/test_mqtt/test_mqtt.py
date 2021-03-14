@@ -1,12 +1,11 @@
-from sensor.mqtt import mqtt
 import os
-import unittest
 import pytest
 import json
-from unittest import mock
+from sensor.mqtt import mqtt
+from unittest import mock, TestCase
 from paho.mqtt import client as mqtt_client
 
-class Test_mqtt(unittest.TestCase):
+class Test_mqtt(TestCase):
     
     def setUp(self):
         self.username = os.environ['USERNAME']
