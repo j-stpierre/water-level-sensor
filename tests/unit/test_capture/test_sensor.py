@@ -17,7 +17,6 @@ class Test_sensor(unittest.TestCase):
     def test_constructor(self):
         GPIO.setup = mock.MagicMock()
         device = sensor.Sensor(6,19)
-        
         self.assertEqual(device.triggerPin, 6)
         self.assertEqual(device.echoPin, 19)
         GPIO.setup.assert_has_calls([mock.call(device.triggerPin, GPIO.OUT), mock.call(device.echoPin, GPIO.IN)])
@@ -40,7 +39,6 @@ class Test_sensor(unittest.TestCase):
         time.time = mock.MagicMock()
         GPIO.input.side_effect = [0,1,1,0]
         time.time.side_effect = [0.001, 0.002, 0.003, 0.004]
-        
         distance = self.device.getDistance()
         self.assertEqual(distance, 17.15)
 
