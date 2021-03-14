@@ -6,7 +6,7 @@ else:
     import RPi.GPIO as GPIO
 
 
-class Sensor:
+class Capture:
 
     def __init__(self, triggerPin, echoPin):
         GPIO.setmode(GPIO.BCM)

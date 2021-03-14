@@ -1,4 +1,4 @@
-import src.mqtt.mqtt as mqtt
+from sensor.mqtt import mqtt
 import os
 import unittest
 import pytest

@@ -1,4 +1,4 @@
-import src.sensor.sensor as sensor
+from sensor.capture import capture
 import unittest
 import time
 from unittest import mock
@@ -9,14 +9,14 @@ else:
     import RPi.GPIO as GPIO
 
 
-class Test_sensor(unittest.TestCase):
+class Test_capture(unittest.TestCase):
 
     def setUp(self):
-        self.device = sensor.Sensor(6,19)
+        self.device = capture.Capture(6,19)
 
     def test_constructor(self):
         GPIO.setup = mock.MagicMock()
-        device = sensor.Sensor(6,19)
+        device = capture.Capture(6,19)
         self.assertEqual(device.triggerPin, 6)
         self.assertEqual(device.echoPin, 19)
         GPIO.setup.assert_has_calls([mock.call(device.triggerPin, GPIO.OUT), mock.call(device.echoPin, GPIO.IN)])
