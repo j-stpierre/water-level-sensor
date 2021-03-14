@@ -29,6 +29,12 @@ class Sensor:
         average = (distance1 + distance2 + distance3)/3
         return average
 
+    def pulseTrigger(self):
+        GPIO.output(self.triggerPin, True)
+        time.sleep(0.00001)
+        GPIO.output(self.triggerPin, False)
+
+
     def getDistance(self):
         start = time.time()
         stop = time.time()

@@ -44,6 +44,9 @@ class Test_sensor(unittest.TestCase):
         distance = self.device.getDistance()
         self.assertEqual(distance, 17.15)
 
-    # def test_pulseTrigger(self):
-    #     GPIO.output = mock.MagicMock()
-    #     self.
+    def test_pulseTrigger(self):
+        GPIO.output = mock.MagicMock()
+        time.sleep = mock.MagicMock()
+        self.device.pulseTrigger()
+        GPIO.output.assert_has_calls([mock.call(self.device.triggerPin, True), mock.call(self.device.triggerPin, False)])
+        time.sleep.assert_called_with(0.00001)
