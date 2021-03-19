@@ -50,3 +50,6 @@ class Capture:
         distance  = distanceInTime /2
 
         return round(distance,2)
+
+    def cleanup(self):
+        GPIO.cleanup()

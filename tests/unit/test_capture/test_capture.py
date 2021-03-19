@@ -49,3 +49,8 @@ class Test_capture(TestCase):
         self.device.pulseTrigger()
         GPIO.output.assert_has_calls([mock.call(self.device.triggerPin, True), mock.call(self.device.triggerPin, False)])
         time.sleep.assert_called_with(0.00001)
+
+    def test_cleanup(self):
+        GPIO.cleanup = mock.MagicMock()
+        self.device.cleanup()
+        assert GPIO.cleanup.called
