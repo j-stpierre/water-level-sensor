@@ -36,6 +36,7 @@ class Capture:
 
 
     def getDistance(self):
+        self.pulseTrigger()
         start = time.time()
         stop = time.time()
         while GPIO.input(self.echoPin)==0:

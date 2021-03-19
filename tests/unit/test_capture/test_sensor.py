@@ -24,8 +24,8 @@ class Test_capture(TestCase):
         GPIO.output = mock.MagicMock()
         time.sleep = mock.MagicMock()
         self.device.setStartState()
-        GPIO.output.called
-        time.sleep.called
+        assert GPIO.output.called
+        assert time.sleep.called
 
     def test_getAverageDistance(self):
         self.device.getDistance = mock.MagicMock()
@@ -36,10 +36,12 @@ class Test_capture(TestCase):
     def test_getDistance(self):
         GPIO.input = mock.MagicMock()
         time.time = mock.MagicMock()
+        self.device.pulseTrigger = mock.MagicMock()
         GPIO.input.side_effect = [0,1,1,0]
         time.time.side_effect = [0.001, 0.002, 0.003, 0.004]
         distance = self.device.getDistance()
         self.assertEqual(distance, 17.15)
+        assert self.device.pulseTrigger.called
 
     def test_pulseTrigger(self):
         GPIO.output = mock.MagicMock()
