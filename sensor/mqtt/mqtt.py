@@ -23,6 +23,6 @@ class Mqtt:
         result = self.client.publish(topic, message)
         status = result[0]
         if status == 0:
-            print("Sent message")
+            print(f"Sent message {message}")
         else:
             print(f"Failed to send message to topic {topic}")

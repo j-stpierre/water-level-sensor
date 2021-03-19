@@ -20,6 +20,7 @@ def main():
     except:
         print("Unexpected error:", sys.exc_info()[0])
         print("Measurement stopped")
+    finally:
         sensor.cleanup()
 
 if __name__ == '__main__':
