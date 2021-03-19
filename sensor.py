@@ -15,6 +15,7 @@ def main():
         sensor = capture.Capture(6,19)
         sensor.setStartState()
         distance = sensor.getAverageDistance()
+        distance = json.dumps({'distance': distance})
         broker.publish(config.config['TOPIC'], distance)
 
     except:
