@@ -33,6 +33,12 @@ class Test_capture(TestCase):
         distance = self.device.getAverageDistance()
         self.assertEqual(distance, 2)
 
+    def test_getAverageDistanceRounded(self):
+        self.device.getDistance = mock.MagicMock()
+        self.device.getDistance.side_effect = [1.1111,2.2222,3.3333]
+        distance = self.device.getAverageDistance()
+        self.assertEqual(distance, 2.22)
+
     def test_getDistance(self):
         GPIO.input = mock.MagicMock()
         time.time = mock.MagicMock()

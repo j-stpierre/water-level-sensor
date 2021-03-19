@@ -27,6 +27,7 @@ class Capture:
         distance2 = self.getDistance()
         distance3 = self.getDistance()
         average = (distance1 + distance2 + distance3)/3
+        average = round(average, 2)
         return average
 
     def pulseTrigger(self):

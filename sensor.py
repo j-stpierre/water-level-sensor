@@ -18,6 +18,7 @@ def main():
             distance = sensor.getAverageDistance()
             distance = json.dumps({'distance': distance})
             broker.publish(config.config['TOPIC'], distance)
+            time.sleep(5)
 
     except:
         print("Unexpected error:", sys.exc_info()[0])
