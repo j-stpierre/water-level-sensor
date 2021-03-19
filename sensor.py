@@ -14,10 +14,11 @@ def main():
         broker.connect()
         sensor = capture.Capture(6,19)
         sensor.setStartState()
-        ditance = sensor.getAverageDistance()
+        distance = sensor.getAverageDistance()
         broker.publish(config.config['TOPIC'], distance)
 
     except:
+        print("Unexpected error:", sys.exc_info()[0])
         print("Measurement stopped")
         sensor.cleanup()
 
