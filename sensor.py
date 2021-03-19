@@ -14,9 +14,10 @@ def main():
         broker.connect()
         sensor = capture.Capture(6,19)
         sensor.setStartState()
-        distance = sensor.getAverageDistance()
-        distance = json.dumps({'distance': distance})
-        broker.publish(config.config['TOPIC'], distance)
+        while True:
+            distance = sensor.getAverageDistance()
+            distance = json.dumps({'distance': distance})
+            broker.publish(config.config['TOPIC'], distance)
 
     except:
         print("Unexpected error:", sys.exc_info()[0])
