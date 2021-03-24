@@ -1,5 +1,5 @@
 from dotenv import dotenv_values
 from os import path
+import sys
 
-ROOT_DIR = path.dirname(path.abspath(".env"))
-config = dotenv_values(path.join(ROOT_DIR, ".env")) 
+config = dotenv_values(path.join(sys.path[0], ".env")) 
