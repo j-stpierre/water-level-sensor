@@ -1,8 +1,8 @@
 import time
-import os
+from sensor.config import config
 from sensor.capture import capture
 from unittest import mock, TestCase
-if os.environ['env'] == 'development':
+if config.config['ENV'] == 'development':
     import FakeRPi.GPIO as GPIO
 else:
     import RPi.GPIO as GPIO

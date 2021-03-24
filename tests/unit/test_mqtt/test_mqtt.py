@@ -1,7 +1,7 @@
 import os
 import pytest
 import json
-import config
+from sensor.config import config
 from sensor.mqtt import mqtt
 from unittest import mock, TestCase
 from paho.mqtt import client as mqtt_client

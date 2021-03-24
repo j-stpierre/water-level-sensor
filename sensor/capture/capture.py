@@ -1,6 +1,7 @@
 import os
 import time
-if os.environ['env'] == 'development':
+from sensor.config import config
+if config.config['ENV'] == 'development':
     import FakeRPi.GPIO as GPIO
 else:
     import RPi.GPIO as GPIO
