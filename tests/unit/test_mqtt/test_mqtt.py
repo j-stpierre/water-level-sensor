@@ -25,9 +25,11 @@ class Test_mqtt(TestCase):
     def test_connect(self):
         self.client.client.username_pw_set = mock.MagicMock()
         self.client.client.connect = mock.MagicMock()
+        self.client.client.loop_start = mock.MagicMock()
         self.client.connect()
         self.client.client.username_pw_set.assert_called_with(self.username, self.password)
         self.client.client.connect.assert_called_with(self.broker, int(self.port))
+        assert self.client.client.loop_start.called
 
     def test_publish(self):
         topic = 'python/mqtt'

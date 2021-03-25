@@ -39,15 +39,34 @@ class Test_capture(TestCase):
         distance = self.device.getAverageDistance()
         self.assertEqual(distance, 2.22)
 
+    def test_getAverageDistanceRounded_with_retry(self):
+        self.device.getDistance = mock.MagicMock()
+        self.device.getDistance.side_effect = [1.1111,-1,2.2222,3.3333]
+        distance = self.device.getAverageDistance()
+        self.assertEqual(distance, 2.22)
+
     def test_getDistance(self):
         GPIO.input = mock.MagicMock()
         time.time = mock.MagicMock()
         self.device.pulseTrigger = mock.MagicMock()
         GPIO.input.side_effect = [0,1,1,0]
-        time.time.side_effect = [0.001, 0.002, 0.003, 0.004]
+        time.time.side_effect = [0.0001, 0.001, 0.002, 0.003, 0.004]
         distance = self.device.getDistance()
         self.assertEqual(distance, 17.15)
         assert self.device.pulseTrigger.called
+        GPIO.input.side_effect = [0,1,1,0]
+        time.time.side_effect = [0.001, 0.002, 0.003, 0.004]
+    
+    def test_getDistance_stuck(self):
+        GPIO.input = mock.MagicMock()
+        time.time = mock.MagicMock()
+        self.device.pulseTrigger = mock.MagicMock()
+        GPIO.input.side_effect = [0,0,0]
+        time.time.side_effect = [0.001, 0.002, 0.003, 0.004, 4]
+        distance = self.device.getDistance()
+        self.assertEqual(distance, -1)
+
+
 
     def test_pulseTrigger(self):
         GPIO.output = mock.MagicMock()

@@ -25,8 +25,17 @@ class Capture:
 
     def getAverageDistance(self):
         distance1 = self.getDistance()
+        while distance1 == -1 :
+            distance1 = self.getDistance()
+
         distance2 = self.getDistance()
+        while distance2 == -1 :
+            distance2 = self.getDistance()
+
         distance3 = self.getDistance()
+        while distance3 == -1 :
+            distance3 = self.getDistance()
+
         average = (distance1 + distance2 + distance3)/3
         average = round(average, 2)
         return average
@@ -39,17 +48,33 @@ class Capture:
 
     def getDistance(self):
         self.pulseTrigger()
+        breakFunction = False
+        breakTime = 3
+
+        functionTime = time.time()
         start = time.time()
         stop = time.time()
+
         while GPIO.input(self.echoPin)==0:
             start = time.time()
+            print (start-functionTime)
+            if ((start - functionTime) > breakTime):
+                breakFunction = True
+                break
 
         while GPIO.input(self.echoPin)==1:
             stop = time.time()
+            if ((start - functionTime) > breakTime):
+                breakFunction = True
+                break
         
+        if (breakFunction):
+            return -1
+
         elapsed = stop-start
         distanceInTime= elapsed * 34300
         distance  = distanceInTime /2
+        time.sleep(1)
 
         return round(distance,2)
 

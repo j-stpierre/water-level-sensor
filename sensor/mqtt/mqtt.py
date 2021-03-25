@@ -18,6 +18,7 @@ class Mqtt:
                 print("Failed to connect, return code %d\n", rc)
         self.client.username_pw_set(self.username, self.password)
         self.client.connect(self.broker, int(self.port))
+        self.client.loop_start()
 
     def publish(self, topic, message):
         result = self.client.publish(topic, message)
