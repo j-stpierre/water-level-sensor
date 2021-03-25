@@ -57,7 +57,6 @@ class Capture:
 
         while GPIO.input(self.echoPin)==0:
             start = time.time()
-            print (start-functionTime)
             if ((start - functionTime) > breakTime):
                 breakFunction = True
                 break
