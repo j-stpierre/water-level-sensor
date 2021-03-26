@@ -1,5 +1,6 @@
 import json
 import time
+import sys
 from sensor.config import config
 from sensor.mqtt import mqtt
 from sensor.capture import capture
@@ -10,10 +11,10 @@ def main():
                     config.config['PASSWORD'],
                     config.config['BROKER'],
                     config.config['PORT'])
-
+    sensor = capture.Capture(6,19)
     try:
         broker.connect()
-        sensor = capture.Capture(6,19)
+        
         sensor.setStartState()
         while True:
             distance = sensor.getAverageDistance()
